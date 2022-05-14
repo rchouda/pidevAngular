@@ -1,6 +1,6 @@
 <form>
   <div class="input-group no-border">
-    <input type="text" class="form-control" placeholder="Search for employees..." (keyup)="search($event)"/>
+    <input type="text" value="" class="form-control" placeholder="Search...">
     <div class="input-group-append">
       <div class="input-group-text">
         <i class="nc-icon nc-zoom-split"></i>
@@ -33,15 +33,16 @@
         <div class="table-responsive">
           <table class="table">
             <thead class="text-primary">
-              <th>login</th>
+              <th>Nom</th>
+              <th>Prenom</th>
               <th>Email</th>
               <th>Num Telephone</th>
             </thead>
             <tbody>
               <tr *ngFor="let employee of employees">
-                <td>{{ employee.login }}</td>
-                <td>{{ employee.email }}</td>
-                <td>{{ employee.telEmployee? employee.telEmployee : "non défini" }}</td>
+                <td>{{ employee.nomEmployee }}</td>
+                <td>{{ employee.prenomEmployee }}</td>
+                <td>{{ employee.mail }}</td>
                 <td>
                   {{ employee.telEmployee }}
                   <div class="float-right btn-group btn-group-sm">
@@ -181,7 +182,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="updateEmployeeModalLabel">
-          Edit Employee {{ editEmployee?.login }}
+          Edit Employee {{ editEmployee?.nomEmployee }}
         </h5>
         <button
           type="button"
@@ -194,16 +195,28 @@
       </div>
       <div class="modal-body">
         <form #editForm="ngForm">
-          <input type="hidden" ngModel="{{editEmployee?.idUtilisateur}}" name="idEmployee" class="form-control" id="idEmployee" placeholder="Email">
+          <input type="hidden" ngModel="{{editEmployee?.idEmployee}}" name="idEmployee" class="form-control" id="idEmployee" placeholder="Email">
           <div class="form-group">
-            <label for="login">Name</label>
+            <label for="nomEmployee">Name</label>
             <input
               type="text"
-              ngModel="{{editEmployee?.login}}"
-              name="login"
+              ngModel="{{editEmployee?.nomEmployee}}"
+              name="nomEmployee"
               class="form-control"
-              id="login"
+              id="nomEmployee"
               placeholder="Nom Employee"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="prenomEmployee">Prenom</label>
+            <input
+              type="text"
+              ngModel="{{editEmployee?.prenomEmployee}}"
+              name="prenomEmployee"
+              class="form-control"
+              id="prenomEmployee"
+              placeholder="Prenom Employee"
               required
             />
           </div>
@@ -211,22 +224,22 @@
             <label for="mail">Email Address</label>
             <input
               type="email"
-              ngModel="{{editEmployee?.email}}"
-              name="email"
+              ngModel="{{editEmployee?.mail}}"
+              name="mail"
               class="form-control"
-              id="email"
+              id="mail"
               placeholder="Email Employee"
               required
             />
           </div>
           <div class="form-group">
-            <label for="telephone">Telephone</label>
+            <label for="telEmployee">Telephone</label>
             <input
               type="text"
               ngModel="{{editEmployee?.telEmployee}}"
-              name="telephone"
+              name="telEmployee"
               class="form-control"
-              id="telephone"
+              id="telEmployee"
               placeholder="Num Telephone"
               
             />
@@ -279,14 +292,14 @@
       <div class="modal-body">
         <p>
           Are you sure you want to delete employee
-          {{ deleteEmployee?.login }}?
+          {{ deleteEmployee?.nomEmployee }}?
         </p>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">
             No
           </button>
           <button
-            (click)="onDeleteEmloyee(deleteEmployee?.idUtilisateur)"
+            (click)="onDeleteEmloyee(deleteEmployee?.idEmployee)"
             class="btn btn-danger"
             data-dismiss="modal"
           >
